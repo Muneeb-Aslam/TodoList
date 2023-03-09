@@ -1,25 +1,39 @@
 import React from "react";
-import trash from "./images/trash.png";
-import "../App.css";
+import Items from "./items";
 
 export default function ListItems() {
-    const list = ["Tex sdkfajksdhfkjsfjsdfjksdf sfksdfkjsdjfjt"];
-    const listitems = list.map((items) => {
-        return (
-        <li className="items">
-            <input type="checkbox"></input>
-            <p>{items}</p>
-            <img src={trash} alt="trash"></img>
-        </li>)
-    });
+
+    const [items, setitems] = React.useState([]);
+    const [text, settext] = React.useState("");
+
+    function AddItems(text) {
+        setitems([...items,text])
+    }
+
+    function deleteItem(id){
+        let newitems = [...items]
+        newitems.splice(id,1)
+        setitems(newitems)
+    }
     return (
         <section className="main-content">
             <div className="input">
-                <input type="text" placeholder="Add new list item"></input>
-                <button>+</button>
+                <input
+                    type="text"
+                    placeholder="Add new list item"
+                    value={text}
+                    onChange={(e) => settext(e.target.value)}
+                ></input>
+                <button onClick={() => {AddItems(text); settext("")}}>+</button>
             </div>
             <div className="list-items">
-                <ul>{listitems}</ul>
+                <ul>
+                    {items.map((item,id)=>{
+                        return (
+                            <Items key={id} index={id} items={item} deleteItem={deleteItem}/>
+                        )
+                    })}
+                </ul>
             </div>
         </section>
     );
