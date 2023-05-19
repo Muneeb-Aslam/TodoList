@@ -24,7 +24,7 @@ export default function ListItems() {
                     value={text}
                     onChange={(e) => settext(e.target.value)}
                 ></input>
-                <button onClick={() => {AddItems(text); settext("")}}>+</button>
+                <button onClick={() => {if(text) AddItems(text); settext("")}}>+</button>
             </div>
             <div className="list-items">
                 <ul>
